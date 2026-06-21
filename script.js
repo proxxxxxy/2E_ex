@@ -4,13 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const topCard = document.getElementById('top-card');
   const videos = document.querySelectorAll('video');
 
-  const formSlide = document.getElementById('form-slide');
-
   let isIntroVisible = true;
-  let isFormVisible = false;
 
   const updateTopCardVisibility = () => {
-    if (!isIntroVisible && !isFormVisible) {
+    if (!isIntroVisible) {
       topCard.classList.add('visible');
     } else {
       topCard.classList.remove('visible');
@@ -33,17 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (introSlide) {
     introObserver.observe(introSlide);
-  }
-
-  const formObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      isFormVisible = entry.isIntersecting;
-      updateTopCardVisibility();
-    });
-  }, observerOptions);
-
-  if (formSlide) {
-    formObserver.observe(formSlide);
   }
 
   // Intersection Observer for video autoplay & pause
