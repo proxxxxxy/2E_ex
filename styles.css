@@ -363,19 +363,18 @@ img, video {
   .top-card {
     width: 95vw;
     top: 5px;
-    padding: 10px 15px;
-    gap: 15px;
+    padding: 8px 12px;
+    gap: 10px;
     border-radius: 10px;
-    /* スマホでも2カラム構成を維持 */
     flex-direction: row; 
-    max-height: 25vh;
+    max-height: 20vh;
   }
   .top-card .attention-title {
     font-size: 14px;
     margin-bottom: 5px;
   }
   .top-card .equipment-img-top {
-    max-height: 20vh;
+    max-height: 15vh;
     margin: 0;
   }
   .top-card .attention-list li {
@@ -383,13 +382,13 @@ img, video {
     line-height: 1.5;
   }
   .step-slide {
-    padding-top: calc(25vh + 20px);
+    padding-top: calc(20vh + 10px);
   }
   .step-card {
-    flex-direction: column; /* スマホ版: 縦に配置 */
+    flex-direction: column;
     width: 100vw;
     margin: 0;
-    height: calc(100vh - (25vh + 20px));
+    height: calc(100vh - (20vh + 10px));
     gap: 0;
   }
   .video-container {
