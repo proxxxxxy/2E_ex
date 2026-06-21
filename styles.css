@@ -1,0 +1,424 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;300;400;500;700&display=swap');
+
+:root {
+  --bg-primary: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --accent-color: #3b82f6;
+  --accent-gradient: linear-gradient(135deg, #2563eb, #4f46e5);
+  --warning-bg: #fef2f2;
+  --warning-border: #fca5a5;
+  --warning-text: #CC0000; /* ユーザー指示の赤色 */
+  --card-border: #e2e8f0;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* 横スクロールコンテナ内でスクロールさせるため、bodyはスクロール禁止 */
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 300;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* クリックやタップ時の黒い枠線（アウトライン）を消す */
+img, video, iframe, .scroll-container, .slide, .video-container, .step-card {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 画像や動画が青くハイライト選択・ドラッグされるのを防ぐ */
+img, video {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* スクロールコンテナ */
+.scroll-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+}
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
+.scroll-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* スライド共通 */
+.slide {
+  flex: 0 0 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 2rem;
+  background-color: var(--bg-primary);
+}
+
+/* イントロスライド */
+.intro-slide {
+  background: var(--bg-primary);
+}
+
+.intro-content {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.intro-content header {
+  margin-bottom: 3rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.intro-content h1 {
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.intro-content .subtitle {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+}
+
+.equipment-large-section {
+  background: var(--bg-card);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.equipment-large-section h2 {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
+}
+
+.equipment-img-large {
+  width: 100%;
+  max-height: 40vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+
+
+/* 上部固定カード (Top Card) */
+.top-card {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, -150%);
+  width: 92vw;
+  max-width: 1200px;
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 15px 30px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  display: flex;
+  gap: 30px;
+  z-index: 1000;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.top-card.visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* 左カラム（器具リスト） */
+.top-card .left-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-card .equipment-title {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+.top-card .equipment-img-top {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 26vh;
+  object-fit: contain;
+  align-self: center;
+  margin: 0;
+  border-radius: 8px;
+}
+
+/* 右カラム（注意点） */
+.top-card .right-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-card .attention-title {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--warning-text);
+  margin-bottom: 10px;
+}
+
+.top-card .attention-list {
+  list-style: none;
+  padding-left: 1.5em;
+}
+
+.top-card .attention-list li {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--warning-text);
+  line-height: 1.8;
+  position: relative;
+  text-align: left;
+  margin-bottom: 0.5rem;
+}
+
+.top-card .attention-list li::before {
+  content: "・";
+  position: absolute;
+  left: -1.5em;
+  color: var(--warning-text);
+}
+
+/* ステップスライド */
+.step-slide {
+  padding-left: 0;
+  padding-top: calc(18vh + 40px); 
+  background-color: var(--bg-primary);
+}
+
+/* アンケートスライドは上部カードを隠すため、パディングをリセットし画面全体に広げる */
+#form-slide {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: var(--bg-primary);
+}
+
+.form-container {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+.form-container iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  outline: 0;
+  display: block;
+  background: transparent;
+}
+
+.step-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  width: 90vw;
+  max-width: 1400px;
+  margin: 0 auto;
+  height: calc(100vh - (18vh + 40px));
+  display: flex;
+  flex-direction: row; /* PC版: 左右に配置 */
+  align-items: center;
+  gap: 40px;
+}
+
+.video-container {
+  position: relative;
+  width: 60%;
+  flex: 2;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+  border: none !important;
+  outline: none !important;
+  border-radius: 0;
+  box-shadow: none;
+  /* GPUレンダリングのサブピクセルアーティファクトを防ぐ */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.step-video {
+  position: absolute;
+  inset: -3px;
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+  display: block;
+  border: 0 !important;
+  outline: 0 !important;
+  object-fit: contain;
+  /* 動画自体の背景も白にしてレターボックスの黒を消す */
+  background: #ffffff !important;
+  box-shadow: none !important;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.step-content {
+  width: 40%;
+  flex: 1;
+  padding: 0;
+  background: transparent;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.step-number {
+  position: static;
+  margin-bottom: 20px;
+  background: #000000;
+  color: #ffffff;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 400;
+  border: none;
+  box-shadow: none;
+}
+
+.step-description {
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.note-text {
+  color: var(--text-secondary);
+  font-size: 0.9em;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(5px); }
+  100% { opacity: 0.5; transform: translateX(0); }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+  .slide {
+    padding: 0;
+  }
+  .top-card {
+    width: 95vw;
+    top: 5px;
+    padding: 10px 15px;
+    gap: 15px;
+    border-radius: 10px;
+    /* スマホでも2カラム構成を維持 */
+    flex-direction: row; 
+    max-height: 25vh;
+  }
+  .top-card .attention-title {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+  .top-card .equipment-img-top {
+    max-height: 20vh;
+    margin: 0;
+  }
+  .top-card .attention-list li {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .step-slide {
+    padding-top: calc(25vh + 20px);
+  }
+  .step-card {
+    flex-direction: column; /* スマホ版: 縦に配置 */
+    width: 100vw;
+    margin: 0;
+    height: calc(100vh - (25vh + 20px));
+    gap: 0;
+  }
+  .video-container {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    height: auto;
+  }
+  .step-video {
+    position: absolute;
+    inset: -3px;
+    width: calc(100% + 6px);
+    height: calc(100% + 6px);
+    object-fit: contain;
+    background: #ffffff !important;
+  }
+  .step-content {
+    width: 100%;
+    flex: none;
+    padding: 1.5rem 1rem;
+    justify-content: flex-start;
+  }
+  .step-number {
+    position: absolute;
+    top: -20px;
+    left: 1rem;
+    margin-bottom: 0;
+    width: 40px;
+    height: 40px;
+    font-size: 1.1rem;
+  }
+}
