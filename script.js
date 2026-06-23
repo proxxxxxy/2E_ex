@@ -60,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     videoObserver.observe(slide);
     const video = slide.querySelector('video');
     if (video) {
+      // HTMLにloopがついているのでJS側で外す（endedイベントを発火させるため）
+      // ※HTML上にloopを残しておかないとiOS Safariが再生ボタンを出すので、
+      //   JSで動的に外す方式にする
+      video.removeAttribute('loop');
+
       // 動画が終わったら2秒待ってから再生
       video.addEventListener('ended', () => {
         setTimeout(() => {
