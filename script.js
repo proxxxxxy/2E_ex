@@ -55,9 +55,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, videoObserverOptions);
 
-  // すべてのステップスライドを監視
+  // すべてのステップスライドを監視し、動画のループ遅延処理を追加
   document.querySelectorAll('.step-slide').forEach(slide => {
     videoObserver.observe(slide);
+    const video = slide.querySelector('video');
+    if (video) {
+      // 動画が終わったら2秒待ってから再生
+      video.addEventListener('ended', () => {
+        setTimeout(() => {
+          video.currentTime = 0;
+          video.play().catch(e => console.log('Autoplay prevented by browser:', e));
+        }, 2000); // 2秒遅延
+      });
+    }
   });
 
   // PCのマウスホイールで横スクロールできるようにする
